@@ -323,7 +323,7 @@ def main():
     )
     admin_msg_conv = ConversationHandler(
         entry_points=[CommandHandler("setmessage", admin_setmessage)],
-        states={ADMIN_AWAITING_MESSAGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, admin_receive_message)]},
+        states={ADMIN_AWAITING_MESSAGE: [MessageHandler(filters.TEXT, admin_receive_message)]},
         fallbacks=[CommandHandler("cancel", cancel)],
     )
 
