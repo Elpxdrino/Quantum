@@ -65,13 +65,9 @@ ABOUT_TEXT = """
 Proprietary High-Frequency Trading Algorithm
 
 *Business Goal:*
-Targeting the Stock & Crypto Markets with advanced AI systems.
+Quantum Edge Arbitrage Fund is a proprietary trading firm focused on capturing inefficiencies across global stock and cryptocurrency markets. Leveraging advanced artificial intelligence, high-frequency execution systems, and quantitative modeling, the firm identifies and exploits short-lived arbitrage opportunities with precision and speed.
 
-Quantum Edge Capital is pleased to present an exclusive, invitation-only investment opportunity in our proprietary High-Frequency Arbitrage Fund.
-
-This fund leverages a custom-built algorithm to exploit micro-price inefficiencies between Irish stock listings and corresponding cryptocurrency asset pairings — a niche market inaccessible to retail platforms and most institutional funds.
-
-_Quantum Edge AI — Precision. Speed. Alpha._
+Our infrastructure is built for ultra-low latency and continuous market analysis, enabling us to operate at the intersection of data science, finance, and cutting-edge technology. By combining disciplined risk management with adaptive algorithms, Quantum Edge seeks to deliver consistent, market-neutral returns in dynamic and volatile environments.
 """
 
 
