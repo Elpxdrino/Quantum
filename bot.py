@@ -297,14 +297,13 @@ def main():
     token = os.environ["BOT_TOKEN"]
     app = Application.builder().token(token).build()
 
+    # Fallbacks only for commands that are NOT conversation entry points
     escape_fallbacks = [
         CommandHandler("cancel", cancel),
         CommandHandler("start", start),
-        CommandHandler("listusers", admin_listusers),
-        CommandHandler("setbalance", admin_setbalance),
-        CommandHandler("setmessage", admin_setmessage),
         CommandHandler("update", update_cmd),
         CommandHandler("about", about),
+        CommandHandler("listusers", admin_listusers),
     ]
 
     balance_conv = ConversationHandler(
@@ -337,14 +336,17 @@ def main():
         fallbacks=escape_fallbacks,
     )
 
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("about", about))
-    app.add_handler(CommandHandler("update", update_cmd))
-    app.add_handler(CommandHandler("listusers", admin_listusers))
+    # Register conversation handlers FIRST — they take priority
     app.add_handler(balance_conv)
     app.add_handler(setpw_conv)
     app.add_handler(admin_bal_conv)
     app.add_handler(admin_msg_conv)
+
+    # Standalone commands registered AFTER conversations
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("about", about))
+    app.add_handler(CommandHandler("update", update_cmd))
+    app.add_handler(CommandHandler("listusers", admin_listusers))
     app.add_handler(CallbackQueryHandler(button_handler))
 
     print("✅ Quantum Edge AI Bot is running...")
