@@ -297,13 +297,23 @@ def main():
     token = os.environ["BOT_TOKEN"]
     app = Application.builder().token(token).build()
 
+    escape_fallbacks = [
+        CommandHandler("cancel", cancel),
+        CommandHandler("start", start),
+        CommandHandler("listusers", admin_listusers),
+        CommandHandler("setbalance", admin_setbalance),
+        CommandHandler("setmessage", admin_setmessage),
+        CommandHandler("update", update_cmd),
+        CommandHandler("about", about),
+    ]
+
     balance_conv = ConversationHandler(
         entry_points=[
             CommandHandler("balance", balance_start),
             CallbackQueryHandler(balance_start, pattern="^balance$"),
         ],
         states={AWAITING_PASSWORD: [MessageHandler(filters.TEXT & ~filters.COMMAND, balance_check)]},
-        fallbacks=[CommandHandler("cancel", cancel)],
+        fallbacks=escape_fallbacks,
     )
     setpw_conv = ConversationHandler(
         entry_points=[
@@ -311,7 +321,7 @@ def main():
             CallbackQueryHandler(setpassword_start, pattern="^setpassword$"),
         ],
         states={AWAITING_PASSWORD: [MessageHandler(filters.TEXT & ~filters.COMMAND, setpassword_receive)]},
-        fallbacks=[CommandHandler("cancel", cancel)],
+        fallbacks=escape_fallbacks,
     )
     admin_bal_conv = ConversationHandler(
         entry_points=[CommandHandler("setbalance", admin_setbalance)],
@@ -319,12 +329,12 @@ def main():
             ADMIN_AWAITING_USER_ID: [MessageHandler(filters.TEXT & ~filters.COMMAND, admin_receive_userid)],
             ADMIN_AWAITING_BALANCE: [MessageHandler(filters.TEXT & ~filters.COMMAND, admin_receive_balance)],
         },
-        fallbacks=[CommandHandler("cancel", cancel)],
+        fallbacks=escape_fallbacks,
     )
     admin_msg_conv = ConversationHandler(
         entry_points=[CommandHandler("setmessage", admin_setmessage)],
         states={ADMIN_AWAITING_MESSAGE: [MessageHandler(filters.TEXT, admin_receive_message)]},
-        fallbacks=[CommandHandler("cancel", cancel)],
+        fallbacks=escape_fallbacks,
     )
 
     app.add_handler(CommandHandler("start", start))
