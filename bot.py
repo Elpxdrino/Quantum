@@ -315,13 +315,13 @@ async def admin_setbalance(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("No users registered yet.")
         return ConversationHandler.END
     context.user_data["user_list"] = users
-    lines = ["👥 *Select a user to update balance:*\n",
-             "Reply with their *number* or *@username*\n"]
+    lines = ["👥 Select a user to update balance:\n",
+             "Reply with their number or @username\n"]
     for i, u in enumerate(users, 1):
         bal = f"${u['balance']:,.2f}" if u.get("balance") is not None else "No balance"
         uname = u.get("username") or u["user_id"]
         lines.append(f"{i}. @{uname} — {bal}")
-    await update.message.reply_text("\n".join(lines), parse_mode="Markdown")
+    await update.message.reply_text("\n".join(lines))
     return ADMIN_AWAITING_USER_ID
 
 
@@ -396,12 +396,12 @@ async def admin_listusers(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not users:
         await update.message.reply_text("No users yet.")
         return
-    lines = ["👥 *Registered Users:*\n"]
+    lines = ["👥 Registered Users:\n"]
     for i, u in enumerate(users, 1):
         bal = f"${u['balance']:,.2f}" if u.get("balance") is not None else "N/A"
         uname = u.get("username") or u["user_id"]
-        lines.append(f"{i}. `{u['user_id']}` — @{uname} — {bal}")
-    await update.message.reply_text("\n".join(lines), parse_mode="Markdown")
+        lines.append(f"{i}. {u['user_id']} — @{uname} — {bal}")
+    await update.message.reply_text("\n".join(lines))
 
 
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
